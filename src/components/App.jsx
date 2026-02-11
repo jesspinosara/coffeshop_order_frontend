@@ -4,11 +4,13 @@ import NavBar from "./NavBar.jsx";
 import Main from "./Main.jsx";
 import ProductModal from "./ProductModal.jsx";
 import Footer from "./Footer.jsx";
+import CartSideBar from "./CartSideBar.jsx";
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleOpenModal = (product) => {
     setSelectedProduct(product);
@@ -23,7 +25,7 @@ export default function App() {
 
   return (
     <div>
-      <Header cartCount={cart.length} />
+      <Header cartCount={cart.length} onOpenCart={() => setIsCartOpen(true)} />
       <NavBar />
       <Main onProductClick={handleOpenModal} />
       <ProductModal
@@ -31,6 +33,12 @@ export default function App() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={addToCart}
+      />
+
+      <CartSideBar
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cart={cart}
       />
       <Footer />
     </div>

@@ -81,7 +81,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
           />
           <button
             onClick={onClose}
-            className="absolute top-0 right-0 text-yellow-500 text-4xl font-bold p-2 hover:text-yellow-300 transition"
+            className="absolute top-0 right-0 text-yellow-500 text-4xl font-bold p-2y hover:text-yellow-300 transition"
           >
             X
           </button>
