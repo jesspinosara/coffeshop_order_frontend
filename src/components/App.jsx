@@ -3,6 +3,7 @@ import Header from "./Header.jsx";
 import NavBar from "./NavBar.jsx";
 import Main from "./Main.jsx";
 import ProductModal from "./ProductModal.jsx";
+import Footer from "./Footer.jsx";
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -15,7 +16,7 @@ export default function App() {
   };
 
   const addToCart = (orderItem) => {
-    setCart([...cart, orderItem]);
+    setCart((prevCart) => [...prevCart, orderItem]);
     setIsModalOpen(false);
     console.log("Carrito actualizado:", [...cart, orderItem]);
   };
@@ -31,6 +32,7 @@ export default function App() {
         onClose={() => setIsModalOpen(false)}
         onConfirm={addToCart}
       />
+      <Footer />
     </div>
   );
 }

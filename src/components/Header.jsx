@@ -1,7 +1,7 @@
 import logo from "../images/logo.png";
 import carrito from "../images/carrito.png";
 
-export default function Header() {
+export default function Header({ cartCount }) {
   return (
     <header className="sticky top-0 z-20 h-20 bg-white shadow-sm">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
@@ -13,9 +13,14 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-3 px-8">
-          <button className="flex items-center gap-4 rounded-full bg-[#E58904] px-4 py-2 text-sm font-medium text-white shadow hover:bg-[#E58904]/60 transition">
+          <button className="flex items-center gap-4 rounded-full bg-orange-400 px-4 py-2 text-sm font-medium text-white shadow hover:bg-orange-500/60 transition">
             <img src={carrito} alt="carrito de compras" className="h-10 w-10" />
-            <span className="text-xl px-1">0</span>
+
+            <span
+              className={`text-xl px-1 font-bold transition-transform ${cartCount > 0 ? "scale-110" : "scale-100"}`}
+            >
+              {cartCount}
+            </span>
           </button>
         </div>
       </div>

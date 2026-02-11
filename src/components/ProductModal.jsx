@@ -61,7 +61,6 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
       ...product,
       ...selections,
       quantity,
-      unitPrice,
       totalPrice: unitPrice * quantity,
     };
     onConfirm(finalOrder);
@@ -82,9 +81,9 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
           />
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md"
+            className="absolute top-0 right-0 text-yellow-500 text-4xl font-bold p-2 hover:text-yellow-300 transition"
           >
-            x
+            X
           </button>
         </div>
 
@@ -105,7 +104,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                 <button
                   key={s}
                   onClick={() => setSelections({ ...selections, size: s })}
-                  className={`flex-1 py-2 border-2 rounded-lg transition ${selections.size === s ? "border-indigo-600 bg-indigo-50" : "border-gray-200"}`}
+                  className={`flex-1 py-2 border-2 rounded-lg transition ${selections.size === s ? "border-yellow-600 bg-yellow-50" : "border-gray-200"}`}
                 >
                   {s} {s === "Grande" && "(+$15)"}
                 </button>
@@ -128,7 +127,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                     product.fixedTemp && product.fixedTemp !== t
                       ? "opacity-30 cursor-not-allowed"
                       : selections.temp === t
-                        ? "border-indigo-600 bg-indigo-50"
+                        ? "border-yellow-600 bg-yellow-50"
                         : "border-gray-200"
                   }`}
                 >
@@ -170,7 +169,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                       flavor: selections.flavor === f ? null : f,
                     })
                   }
-                  className={`py-2 px-3 border rounded-lg text-sm transition ${selections.flavor === f ? "border-indigo-600 bg-indigo-50 font-medium" : "border-gray-200"}`}
+                  className={`py-2 px-3 border rounded-lg text-sm transition ${selections.flavor === f ? "border-yellow-600 bg-yellow-50 font-medium" : "border-gray-200"}`}
                 >
                   {f}
                 </button>
@@ -190,7 +189,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                     <button
                       key={h}
                       onClick={() => setSelections({ ...selections, ice: h })}
-                      className={`px-4 py-2 rounded-full text-xs border ${selections.ice === h ? "bg-black text-white" : "border-gray-300"}`}
+                      className={`px-4 py-2 rounded-full text-xs border ${selections.ice === h ? "bg-yellow-600 text-white" : "border-gray-300"}`}
                     >
                       {h}
                     </button>
@@ -208,7 +207,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                 <button
                   key={d}
                   onClick={() => setSelections({ ...selections, sweetness: d })}
-                  className={`flex-1 py-2 text-sm border-b-2 ${selections.sweetness === d ? "border-indigo-600 text-indigo-600 font-bold" : "border-gray-100"}`}
+                  className={`flex-1 py-2 text-sm border-b-2 ${selections.sweetness === d ? "border-yellow-600 text-yellow-600 font-bold" : "border-gray-100"}`}
                 >
                   {d}
                 </button>
@@ -222,7 +221,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
               Instrucciones Especiales
             </h3>
             <textarea
-              className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-yellow-500 outline-none"
               placeholder="Ej. Sin popote, muy caliente, etc."
               rows="2"
               onChange={(e) =>
@@ -252,7 +251,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           <button
             onClick={handleConfirm}
-            className="flex-1 bg-indigo-600 text-white py-4 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg"
+            className="flex-1 bg-yellow-600 text-white py-4 rounded-xl font-bold hover:bg-yellow-700 transition shadow-lg"
           >
             Agregar {quantity} al carrito — ${(unitPrice * quantity).toFixed(2)}
           </button>

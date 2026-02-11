@@ -3,7 +3,7 @@ export default function ProductCard({ product, onProductClick }) {
     <div>
       <button
         onClick={() => onProductClick(product)}
-        className="flex flex-col rounded-2xl bg-[#EABD0B]/80 p-6 w-65 min-h-90 text-left shadow-md transition hover:scale-[1.03] hover:shadow-lg"
+        className="flex flex-col rounded-2xl bg-yellow-500 p-6 w-65 min-h-90 text-left shadow-md transition hover:scale-[1.03] hover:shadow-lg"
       >
         <div className="mb-5 flex justify-center">
           <img
@@ -17,8 +17,8 @@ export default function ProductCard({ product, onProductClick }) {
           {product.description}
         </p>
 
-        <span className="mt-5 text-xl font-bold text-[#EEE9D4]">
-          ${product.price}
+        <span className="mt-5 text-xl font-bold text-orange-900">
+          ${product.basePrice}
         </span>
       </button>
     </div>
