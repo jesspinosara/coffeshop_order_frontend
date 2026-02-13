@@ -21,9 +21,9 @@ export default function NavBar() {
 
   return (
     <nav className="sticky top-18 z-10 bg-white shadow-lg">
-      <ul className="flex gap-40 overflow-x-auto px-50 py-6 text-base font-medium text-gray-600">
+      <ul className="flex flex-row overflow-x-auto items-center no-scrollbar scroll-smooth gap-5 px-2 py-6 justify-center text-base font-medium text-gray-600 md:gap-20 md:px-20 lg:gap-40 lg:px-26 lg:py-6 lg:justify-center">
         {categories.map((category) => (
-          <li key={category}>
+          <li key={category} className="shrink-0">
             <button
               onClick={() => scrollToCategory(category)}
               className="whitespace-nowrap pb-2 border-b-2 border-transparent 

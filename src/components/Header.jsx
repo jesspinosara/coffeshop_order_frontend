@@ -6,8 +6,8 @@ export default function Header({ cartCount, onOpenCart }) {
     <header className="sticky top-0 z-20 h-20 bg-white shadow-sm">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
         <div className="flex items-center gap-2">
-          <img src={logo} alt="imagen de abeja" className="h-20 w-auto px-6" />
-          <h1 className="text-xl font-semibold px-10 tracking-wide">
+          <img src={logo} alt="imagen de abeja" className="h-20 w-auto px-4" />
+          <h1 className="text-l font-semibold px-1 tracking-wide">
             ORDENA TUS BEBIDAS
           </h1>
         </div>
