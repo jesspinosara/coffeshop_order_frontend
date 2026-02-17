@@ -23,6 +23,29 @@ export default function App() {
     console.log("Carrito actualizado:", [...cart, orderItem]);
   };
 
+  const updateCartQuantity = (index, delta) => {
+    setCart((prevCart) => {
+      const newCart = [...prevCart];
+      const item = { ...newCart[index] };
+
+      const newQuantity = item.quantity + delta;
+      if (newQuantity > 0) {
+        item.quantity = newQuantity;
+
+        const unitPrice = item.totalPrice / (item.quantity - delta);
+        item.totalPrice = unitPrice * newQuantity;
+
+        newCart[index] = item;
+        return newCart;
+      }
+      return prevCart;
+    });
+  };
+
+  const removeFromCart = (index) => {
+    setCart(cart.filter((_, i) => i !== index));
+  };
+
   return (
     <div>
       <Header cartCount={cart.length} onOpenCart={() => setIsCartOpen(true)} />
@@ -36,9 +59,11 @@ export default function App() {
       />
 
       <CartSideBar
+        cart={cart}
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        cart={cart}
+        updateCartQuantity={updateCartQuantity}
+        removeFromCart={removeFromCart}
       />
       <Footer />
     </div>

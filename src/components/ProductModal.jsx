@@ -6,7 +6,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
   const [selections, setSelections] = useState({
     size: "Mediano",
     temp: product?.defaultTemp || "Frío",
-    milk: "Entera",
+    milk: "N/A",
     flavor: null,
     ice: "Hielo normal",
     sweetness: "100% dulce",
@@ -31,7 +31,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
       setSelections({
         size: "Mediano",
         temp: product.defaultTemp || "Frío",
-        milk: "Entera",
+        milk: "N/A",
         flavor: null,
         ice: "Hielo normal",
         sweetness: "100% dulce",
@@ -70,18 +70,13 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
   if (!isOpen || !product) return null;
 
   return (
-    <div className="fixed inset-0 bg-brown bg-opacity-50 flex justify-center items-center z-50 p-4">
-      <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-xl flex flex-col">
+    <div className="fixed inset-0 bg-gray-700/80 backdrop-blur-sm text-white flex justify-center items-center z-50 p-4">
+      <div className="bg-yellow-400/20 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-xl flex flex-col">
         {/* Header fijo */}
-        <div className="relative shrink-0">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-48 object-cover"
-          />
+        <div className="relative">
           <button
             onClick={onClose}
-            className="absolute top-0 right-0 text-yellow-500 text-4xl font-bold p-2y hover:text-yellow-300 transition"
+            className="absolute top-2 right-5 text-yellow-500 text-5xl font-bold p-2y hover:text-white transition"
           >
             X
           </button>
@@ -90,21 +85,23 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
         <div className="p-6 space-y-8 overflow-y-auto">
           {/* Información básica */}
           <section>
-            <h2 className="text-2xl font-bold">{product.name}</h2>
-            <p className="text-gray-500 text-sm mt-1">{product.description}</p>
+            <h2 className="text-4xl font-bold">{product.name}</h2>
+            <p className="text-shadow-gray-800 text-md mt-1">
+              {product.description}
+            </p>
           </section>
 
           {/* 1.Tamaño */}
           <section>
             <h3 className="font-bold mb-3">
-              Tamaño <span className="text-red-500">*</span>
+              Tamaño <span className="text-red-600 text-xl">*</span>
             </h3>
             <div className="flex gap-4">
               {["Mediano", "Grande"].map((s) => (
                 <button
                   key={s}
                   onClick={() => setSelections({ ...selections, size: s })}
-                  className={`flex-1 py-2 border-2 rounded-lg transition ${selections.size === s ? "border-yellow-600 bg-yellow-50" : "border-gray-200"}`}
+                  className={`flex-1 py-2 border-2 rounded-lg text-lg font-bold transition ${selections.size === s ? "bg-yellow-600 text-white text-lg" : "bg-white text-amber-400 text-bold border-gray-300"}`}
                 >
                   {s} {s === "Grande" && "(+$15)"}
                 </button>
@@ -115,7 +112,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
           {/* 2.Temperatura */}
           <section>
             <h3 className="font-bold mb-3">
-              Temperatura <span className="text-red-500">*</span>
+              Temperatura <span className="text-red-600 text-xl">*</span>
             </h3>
             <div className="flex gap-4">
               {["Frío", "Caliente"].map((t) => (
@@ -123,12 +120,12 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                   key={t}
                   disabled={product.fixedTemp && product.fixedTemp !== t}
                   onClick={() => setSelections({ ...selections, temp: t })}
-                  className={`flex-1 py-2 border-2 rounded-lg ${
+                  className={`flex-1 py-2 border-2 rounded-lg text-lg font-bold ${
                     product.fixedTemp && product.fixedTemp !== t
                       ? "opacity-30 cursor-not-allowed"
                       : selections.temp === t
-                        ? "border-yellow-600 bg-yellow-50"
-                        : "border-gray-200"
+                        ? "bg-yellow-600 text-white text-lg"
+                        : "bg-white text-amber-400 text-bold border-gray-300"
                   }`}
                 >
                   {t}
@@ -139,11 +136,9 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           {/* 3.Leche */}
           <section>
-            <h3 className="font-bold mb-3">
-              Tipo de Leche <span className="text-red-500">*</span>
-            </h3>
+            <h3 className="font-bold mb-3">Tipo de Leche</h3>
             <select
-              className="w-full p-3 border-2 border-gray-200 rounded-lg"
+              className="w-full p-3 border-2 bg-yellow-600 border-gray-200 rounded-lg text-lg font-bold"
               value={selections.milk}
               onChange={(e) =>
                 setSelections({ ...selections, milk: e.target.value })
@@ -169,7 +164,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                       flavor: selections.flavor === f ? null : f,
                     })
                   }
-                  className={`py-2 px-3 border rounded-lg text-sm transition ${selections.flavor === f ? "border-yellow-600 bg-yellow-50 font-medium" : "border-gray-200"}`}
+                  className={`py-2 px-3 border rounded-lg text-lg font-bold transition ${selections.flavor === f ? "bg-yellow-600 text-white text-lg" : "bg-white text-amber-400 text-bold border-gray-300"}`}
                 >
                   {f}
                 </button>
@@ -180,10 +175,8 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
           {/* Nivel de Hielo(Solo si es frío) */}
           {selections.temp === "Frío" && (
             <section>
-              <h3 className="font-bold mb-3 text-gray-800">
-                Cantidad de Hielo
-              </h3>
-              <div className="flex flex-wrap gap-2">
+              <h3 className="font-bold mb-3 text-white">Cantidad de Hielo</h3>
+              <div className="flex flex-wrap text-md font-bold gap-6">
                 {["Hielo normal", "Medio hielo", "Poco hielo", "Sin hielo"].map(
                   (h) => (
                     <button
@@ -201,13 +194,13 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           {/* 6. Nivel de Dulzor */}
           <section>
-            <h3 className="font-bold mb-3 text-gray-800">Nivel de Azúcar</h3>
+            <h3 className="font-bold mb-3 text-white">Nivel de Azúcar</h3>
             <div className="flex justify-between gap-1">
               {["100%", "50%", "25%", "0%"].map((d) => (
                 <button
                   key={d}
                   onClick={() => setSelections({ ...selections, sweetness: d })}
-                  className={`flex-1 py-2 text-sm border-b-2 ${selections.sweetness === d ? "border-yellow-600 text-yellow-600 font-bold" : "border-gray-100"}`}
+                  className={`flex-1 py-2 text-sm border-b-2 font-bold ${selections.sweetness === d ? "border-yellow-600 text-yellow-600 font-bold" : "border-gray-100"}`}
                 >
                   {d}
                 </button>
@@ -217,11 +210,11 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           {/* 7. Instrucciones Especiales */}
           <section>
-            <h3 className="font-bold mb-3 text-gray-800">
+            <h3 className="font-bold mb-3 text-white">
               Instrucciones Especiales
             </h3>
             <textarea
-              className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-yellow-500 outline-none"
+              className="w-full border border-gray-100 rounded-lg p-3 text-md focus:ring-2 focus:ring-yellow-500 outline-none"
               placeholder="Ej. Sin popote, muy caliente, etc."
               rows="2"
               onChange={(e) =>
@@ -232,7 +225,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
         </div>
 
         {/* Footer: Contador y Botón Final */}
-        <div className="p-4 border-t bg-gray-50 flex items-center gap-4">
+        <div className="p-4 border-t bg-yellow-100/40 text-yellow-600 flex items-center gap-4">
           <div className="flex items-center border-2 border-gray-200 rounded-xl overflow-hidden bg-white">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}

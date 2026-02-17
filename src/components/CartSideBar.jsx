@@ -1,6 +1,13 @@
 import React from "react";
+import deleteIcon from "../images/trashbutton.png";
 
-export default function CartSideBar({ cart, isOpen, onClose }) {
+export default function CartSideBar({
+  cart,
+  isOpen,
+  onClose,
+  updateCartQuantity,
+  removeFromCart,
+}) {
   const total = cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
   return (
@@ -17,7 +24,7 @@ export default function CartSideBar({ cart, isOpen, onClose }) {
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="p-6 border-b flex justify-between items-center bg-gray-50">
+          <div className="p-6 border-b flex justify-between items-center bg-yellow-400/20">
             <h2 className="text-2xl font-bold">Tu Orden</h2>
             <button
               onClick={onClose}
@@ -35,22 +42,56 @@ export default function CartSideBar({ cart, isOpen, onClose }) {
               </p>
             ) : (
               cart.map((item, index) => (
-                <div key={index} className="flex justify-between border-b pb-4">
-                  <div>
-                    <h4 className="font-bold">
-                      {item.quantity}x {item.name}
-                    </h4>
-                    <p className="text-sm text-gray-500">
-                      {item.size}, {item.temp}, {item.milk}
-                      {item.flavor && `, Sabor: ${item.flavor}`}{" "}
-                    </p>
-                    {item.instructions && (
-                      <p className="text-sm italic text-orange-500">
-                        Instrucciones: {item.instructions}
+                <div key={index} className="flex flex-col border-b pb-4 gap-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h4 className="font-bold">
+                        {item.quantity}x {item.name}
+                      </h4>
+                      <p className="text-sm text-gray-500">
+                        {item.size}, {item.temp}, {item.milk}
+                        {item.flavor && `, Sabor: ${item.flavor}`}{" "}
                       </p>
-                    )}
+                      {item.instructions && (
+                        <p className="text-sm italic text-orange-500">
+                          "{item.instructions}"
+                        </p>
+                      )}
+                    </div>
+                    <p className="font-semibold">
+                      ${item.totalPrice.toFixed(2)}
+                    </p>
                   </div>
-                  <p className="font-semibold">${item.totalPrice.toFixed(2)}</p>
+
+                  {/* Controles de cantidad y eliminación */}
+                  <div className="flex justify-between items-center mt-2">
+                    <div className="flex items-center border rounded-lg bg-yellow-600">
+                      <button
+                        onClick={() => updateCartQuantity(index, -1)}
+                        className="px-3 py-1 hover:bg-yellow-600/60 font-bold"
+                      >
+                        -
+                      </button>
+                      <span className="px-3 font-medium">{item.quantity}</span>
+                      <button
+                        onClick={() => updateCartQuantity(index, 1)}
+                        className="px-3 py-1 hover:bg-yellow-600/60 font-bold"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={() => removeFromCart(index)}
+                      className="text-orange-500 hover:underline flex items-center gap-1"
+                    >
+                      <img
+                        src={deleteIcon}
+                        alt="Eliminar"
+                        className="h-5 w-5"
+                      />
+                    </button>
+                  </div>
                 </div>
               ))
             )}
