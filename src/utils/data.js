@@ -22,6 +22,7 @@ const products = [
     image: espresso,
     defaultTemp: "Caliente",
     fixedTemp: "Caliente",
+    isMilkBased: false,
   },
   {
     id: 2,
@@ -33,6 +34,7 @@ const products = [
     image: americano,
     defaultTemp: "Caliente",
     fixedTemp: null,
+    isMilkBased: false,
   },
   {
     id: 3,
@@ -44,6 +46,7 @@ const products = [
     image: coldbrew,
     defaultTemp: "Frío",
     fixedTemp: "Frío",
+    isMilkBased: false,
   },
   {
     id: 4,
@@ -55,6 +58,7 @@ const products = [
     image: cappuccino,
     defaultTemp: "Caliente",
     fixedTemp: null,
+    isMilkBased: true,
   },
   {
     id: 5,
@@ -66,6 +70,7 @@ const products = [
     image: latte,
     defaultTemp: "Caliente",
     fixedTemp: null,
+    isMilkBased: true,
   },
   {
     id: 6,
@@ -77,6 +82,7 @@ const products = [
     image: moka,
     defaultTemp: "Caliente",
     fixedTemp: null,
+    isMilkBased: true,
   },
   {
     id: 7,
@@ -88,6 +94,7 @@ const products = [
     image: flatwhite,
     defaultTemp: "Caliente",
     fixedTemp: "Caliente",
+    isMilkBased: true,
   },
   {
     id: 8,
@@ -99,6 +106,7 @@ const products = [
     image: matcha,
     defaultTemp: "Caliente",
     fixedTemp: null,
+    isMilkBased: true,
   },
   {
     id: 9,
@@ -110,6 +118,7 @@ const products = [
     image: chai,
     defaultTemp: "Caliente",
     fixedTemp: null,
+    isMilkBased: true,
   },
   {
     id: 10,
@@ -121,6 +130,7 @@ const products = [
     image: horchata,
     defaultTemp: "Frío",
     fixedTemp: null,
+    isMilkBased: true,
   },
   {
     id: 11,
@@ -131,6 +141,7 @@ const products = [
     image: tonic,
     defaultTemp: "Frío",
     fixedTemp: "Frío",
+    isMilkBased: false,
   },
   {
     id: 12,
@@ -142,6 +153,7 @@ const products = [
     image: carajillo,
     defaultTemp: "Frío",
     fixedTemp: "Frío",
+    isMilkBased: false,
   },
 ];
 

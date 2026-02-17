@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
   //Estado para las selecciones
@@ -48,8 +48,14 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
     let extra = 0;
     if (selections.size === "Grande") extra += 15;
-    if (selections.milk === "Avena" || selections.milk === "Almendra")
+    if (selections.milk === "Avena" || selections.milk === "Almendra") {
       extra += 10;
+    } else if (
+      selections.milk === "Entera" ||
+      ("Deslactosada" && product.isMilkBased === false)
+    ) {
+      extra += 5;
+    }
     if (selections.flavor) extra += 10;
 
     setUnitPrice(product.basePrice + extra);
@@ -70,13 +76,13 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
   if (!isOpen || !product) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-700/80 backdrop-blur-sm text-white flex justify-center items-center z-50 p-4">
-      <div className="bg-yellow-400/20 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-xl flex flex-col">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm text-white flex justify-center items-center z-50 p-4">
+      <div className="bg-yellow-400/80 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-xl flex flex-col">
         {/* Header fijo */}
         <div className="relative">
           <button
             onClick={onClose}
-            className="absolute top-2 right-5 text-yellow-500 text-5xl font-bold p-2y hover:text-white transition"
+            className="absolute top-2 right-5 text-white text-4xl font-bold p-2y hover:text-yellow-600 transition"
           >
             X
           </button>
@@ -93,7 +99,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           {/* 1.Tamaño */}
           <section>
-            <h3 className="font-bold mb-3">
+            <h3 className="font-bold mb-3 uppercase tracking-wider text-md text-gray-600/90">
               Tamaño <span className="text-red-600 text-xl">*</span>
             </h3>
             <div className="flex gap-4">
@@ -101,7 +107,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                 <button
                   key={s}
                   onClick={() => setSelections({ ...selections, size: s })}
-                  className={`flex-1 py-2 border-2 rounded-lg text-lg font-bold transition ${selections.size === s ? "bg-yellow-600 text-white text-lg" : "bg-white text-amber-400 text-bold border-gray-300"}`}
+                  className={`flex-1 py-2 border-2 rounded-lg text-lg font-bold transition ${selections.size === s ? "bg-yellow-600 text-white text-lg" : "bg-white text-amber-400 text-bold border-gray-200"}`}
                 >
                   {s} {s === "Grande" && "(+$15)"}
                 </button>
@@ -111,7 +117,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           {/* 2.Temperatura */}
           <section>
-            <h3 className="font-bold mb-3">
+            <h3 className="font-bold mb-3 uppercase tracking-wider text-md text-gray-600/90">
               Temperatura <span className="text-red-600 text-xl">*</span>
             </h3>
             <div className="flex gap-4">
@@ -125,7 +131,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                       ? "opacity-30 cursor-not-allowed"
                       : selections.temp === t
                         ? "bg-yellow-600 text-white text-lg"
-                        : "bg-white text-amber-400 text-bold border-gray-300"
+                        : "bg-white text-amber-400 text-bold border-gray-200"
                   }`}
                 >
                   {t}
@@ -136,7 +142,9 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           {/* 3.Leche */}
           <section>
-            <h3 className="font-bold mb-3">Tipo de Leche</h3>
+            <h3 className="font-bold mb-3 uppercase tracking-wider text-md text-gray-600/90">
+              Tipo de Leche
+            </h3>
             <select
               className="w-full p-3 border-2 bg-yellow-600 border-gray-200 rounded-lg text-lg font-bold"
               value={selections.milk}
@@ -144,8 +152,13 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                 setSelections({ ...selections, milk: e.target.value })
               }
             >
-              <option value="Entera">Entera</option>
-              <option value="Deslactosada">Deslactosada</option>
+              <option value="Ninguna">Elige tu leche:</option>
+              <option value="Entera">
+                Entera {product.isMilkBased === false ? "(+$5)" : ""}{" "}
+              </option>
+              <option value="Deslactosada">
+                Deslactosada {product.isMilkBased === false ? "(+$5)" : ""}{" "}
+              </option>
               <option value="Avena">Avena (+$10)</option>
               <option value="Almendra">Almendra (+$10)</option>
             </select>
@@ -153,7 +166,9 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           {/* 4.Anadir sabor */}
           <section>
-            <h3 className="font-bold mb-3">Añadir sabor (+$10)</h3>
+            <h3 className="font-bold mb-3 uppercase tracking-wider text-md text-gray-600/90">
+              Añadir sabor (+$10)
+            </h3>
             <div className="grid grid-cols-2 gap-2">
               {flavors.map((f) => (
                 <button
@@ -164,7 +179,7 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
                       flavor: selections.flavor === f ? null : f,
                     })
                   }
-                  className={`py-2 px-3 border rounded-lg text-lg font-bold transition ${selections.flavor === f ? "bg-yellow-600 text-white text-lg" : "bg-white text-amber-400 text-bold border-gray-300"}`}
+                  className={`py-2 px-3 border rounded-lg text-lg font-bold transition ${selections.flavor === f ? "bg-yellow-600 text-white text-lg" : "bg-white text-amber-400 text-bold border-gray-200"}`}
                 >
                   {f}
                 </button>
@@ -175,14 +190,16 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
           {/* Nivel de Hielo(Solo si es frío) */}
           {selections.temp === "Frío" && (
             <section>
-              <h3 className="font-bold mb-3 text-white">Cantidad de Hielo</h3>
+              <h3 className="font-bold mb-3 uppercase tracking-wider text-md text-gray-600/90">
+                Cantidad de Hielo
+              </h3>
               <div className="flex flex-wrap text-md font-bold gap-6">
                 {["Hielo normal", "Medio hielo", "Poco hielo", "Sin hielo"].map(
                   (h) => (
                     <button
                       key={h}
                       onClick={() => setSelections({ ...selections, ice: h })}
-                      className={`px-4 py-2 rounded-full text-xs border ${selections.ice === h ? "bg-yellow-600 text-white" : "border-gray-300"}`}
+                      className={`px-4 py-2 rounded-full text-xs border ${selections.ice === h ? "bg-yellow-600 text-white" : "border-gray-200"}`}
                     >
                       {h}
                     </button>
@@ -194,13 +211,15 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           {/* 6. Nivel de Dulzor */}
           <section>
-            <h3 className="font-bold mb-3 text-white">Nivel de Azúcar</h3>
+            <h3 className="font-bold mb-3 uppercase tracking-wider text-md text-gray-600/90">
+              Nivel de Azúcar
+            </h3>
             <div className="flex justify-between gap-1">
               {["100%", "50%", "25%", "0%"].map((d) => (
                 <button
                   key={d}
                   onClick={() => setSelections({ ...selections, sweetness: d })}
-                  className={`flex-1 py-2 text-sm border-b-2 font-bold ${selections.sweetness === d ? "border-yellow-600 text-yellow-600 font-bold" : "border-gray-100"}`}
+                  className={`flex-1 py-2 text-sm border-b-2 font-bold ${selections.sweetness === d ? "border-yellow-600 text-yellow-600 font-bold" : "border-gray-200"}`}
                 >
                   {d}
                 </button>
@@ -210,11 +229,11 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
 
           {/* 7. Instrucciones Especiales */}
           <section>
-            <h3 className="font-bold mb-3 text-white">
+            <h3 className="font-bold mb-3 uppercase tracking-wider text-md text-gray-600/90">
               Instrucciones Especiales
             </h3>
             <textarea
-              className="w-full border border-gray-100 rounded-lg p-3 text-md focus:ring-2 focus:ring-yellow-500 outline-none"
+              className="w-full border border-gray-300 rounded-lg p-3 text-md focus:ring-2 focus:ring-yellow-200 outline-none"
               placeholder="Ej. Sin popote, muy caliente, etc."
               rows="2"
               onChange={(e) =>

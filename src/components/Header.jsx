@@ -15,7 +15,7 @@ export default function Header({ cartCount, onOpenCart }) {
         <div className="flex items-center gap-3 px-8">
           <button
             onClick={onOpenCart}
-            className="flex items-center gap-4 rounded-full bg-orange-400 px-4 py-2 text-sm font-medium text-white shadow hover:bg-orange-500/60 transition"
+            className="flex items-center gap-4 rounded-full bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow hover:bg-yellow-600 transition"
           >
             <img src={carrito} alt="carrito de compras" className="h-10 w-10" />
 
