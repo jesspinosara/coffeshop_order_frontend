@@ -7,6 +7,7 @@ export default function CartSideBar({
   onClose,
   updateCartQuantity,
   removeFromCart,
+  onCheckout,
 }) {
   const total = cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
@@ -121,10 +122,9 @@ export default function CartSideBar({
             <button
               disabled={cart.length === 0}
               className="w-full bg-yellow-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-yellow-700 transition-all shadow-lg active:scale-95 disabled:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={() => alert("Orden enviada a barista")}
+              onClick={onCheckout}
             >
-              {" "}
-              Confirmar y enviar orden{" "}
+              Finalizar Pedido
             </button>
           </div>
         </div>
