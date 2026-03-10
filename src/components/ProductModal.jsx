@@ -47,16 +47,19 @@ export default function ProductModal({ product, isOpen, onClose, onConfirm }) {
     if (!product) return;
 
     let extra = 0;
-    if (selections.size === "Grande") extra += 15;
+    if (selections.size === "Grande") {
+      extra += 15;
+    }
     if (selections.milk === "Avena" || selections.milk === "Almendra") {
       extra += 10;
-    } else if (
-      selections.milk === "Entera" ||
-      ("Deslactosada" && product.isMilkBased === false)
-    ) {
-      extra += 5;
+    } else if (product.isMilkBased === false) {
+      if (selections.milk === "Entera" || selections.milk === "Deslactosada") {
+        extra += 5;
+      }
     }
-    if (selections.flavor) extra += 10;
+    if (selections.flavor) {
+      extra += 10;
+    }
 
     setUnitPrice(product.basePrice + extra);
   }, [selections, product]);

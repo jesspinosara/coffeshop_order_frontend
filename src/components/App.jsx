@@ -5,12 +5,15 @@ import Main from "./Main.jsx";
 import ProductModal from "./ProductModal.jsx";
 import Footer from "./Footer.jsx";
 import CartSideBar from "./CartSideBar.jsx";
+import OrderConfirmModal from "./OrderConfirmModal.jsx";
+import { createOrder } from "../utils/api.js";
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const handleOpenModal = (product) => {
     setSelectedProduct(product);
@@ -20,7 +23,6 @@ export default function App() {
   const addToCart = (orderItem) => {
     setCart((prevCart) => [...prevCart, orderItem]);
     setIsModalOpen(false);
-    console.log("Carrito actualizado:", [...cart, orderItem]);
   };
 
   const updateCartQuantity = (index, delta) => {
@@ -46,6 +48,32 @@ export default function App() {
     setCart(cart.filter((_, i) => i !== index));
   };
 
+  const cartTotal = cart.reduce((acc, item) => acc + item.totalPrice, 0);
+
+  const handleFinalOrder = (userData) => {
+    const orderData = {
+      name: userData.name,
+      email: userData.email,
+      drinkName: cart
+        .map((item) => `${item.quantity}x ${item.name}`)
+        .join(", "),
+      totalPrice: cartTotal,
+      selections: cart[0],
+    };
+
+    createOrder(orderData)
+      .then(() => {
+        alert(`¡Gracias ${userData.name}! Tu pedido ha sido enviado.`);
+        setCart([]);
+        setIsConfirmModalOpen(false);
+        setIsCartOpen(false);
+      })
+      .catch((err) => {
+        console.error("Error en la orden:", err);
+        alert("No se pudo conectar con el servidor");
+      });
+  };
+
   return (
     <div>
       <Header cartCount={cart.length} onOpenCart={() => setIsCartOpen(true)} />
@@ -64,7 +92,16 @@ export default function App() {
         onClose={() => setIsCartOpen(false)}
         updateCartQuantity={updateCartQuantity}
         removeFromCart={removeFromCart}
+        onCheckout={() => setIsConfirmModalOpen(true)}
       />
+
+      <OrderConfirmModal
+        isOpen={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        total={cartTotal.toFixed(2)}
+        onConfirm={handleFinalOrder}
+      />
+
       <Footer />
     </div>
   );
