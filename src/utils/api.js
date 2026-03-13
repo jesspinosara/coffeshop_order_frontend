@@ -1,7 +1,7 @@
 //Esto cambiará a class Api cuando se agreguen más funcionalidades en etapa 2
 
 // URL base (Cambiamos esto al desplegar)
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "https://api.ordena.ambientcoffee.com";
 
 export const checkResponse = (res) => {
   if (res.ok) {
