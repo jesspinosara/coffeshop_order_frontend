@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 
-export default function OrderConfirmModal({
-  isOpen,
-  onClose,
-  onConfirm,
-  total,
-}) {
+export default function OrderConfirmModal({ isOpen, onClose, onConfirm }) {
   const [formData, setFormData] = useState({ name: "", email: "" });
 
   if (!isOpen) return null;

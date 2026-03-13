@@ -51,6 +51,8 @@ export default function App() {
   const cartTotal = cart.reduce((acc, item) => acc + item.totalPrice, 0);
 
   const handleFinalOrder = (userData) => {
+    if (cart.length === 0) return;
+
     const orderData = {
       name: userData.name,
       email: userData.email,
@@ -58,8 +60,21 @@ export default function App() {
         .map((item) => `${item.quantity}x ${item.name}`)
         .join(", "),
       totalPrice: cartTotal,
-      selections: cart[0],
+      selections: {
+        items: cart.map((item) => ({
+          name: item.name,
+          size: item.size,
+          temp: item.temp,
+          milk: item.milk,
+          sweetness: item.sweetness,
+          ice: item.ice,
+          flavor: item.flavor || "none",
+          quantity: item.quantity,
+        })),
+      },
     };
+
+    console.log("Enviando datos:", orderData);
 
     createOrder(orderData)
       .then(() => {
@@ -70,7 +85,7 @@ export default function App() {
       })
       .catch((err) => {
         console.error("Error en la orden:", err);
-        alert("No se pudo conectar con el servidor");
+        alert("Hubo un problema con la validación de los datos");
       });
   };
 
