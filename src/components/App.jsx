@@ -60,16 +60,14 @@ export default function App() {
         .map((item) => `${item.quantity}x ${item.name}`)
         .join(", "),
       totalPrice: cartTotal,
+      quantity: cart.reduce((acc, item) => acc + item.quantity, 0),
       selections: {
         items: cart.map((item) => ({
           name: item.name,
           size: item.size,
-          temp: item.temp,
           milk: item.milk,
           sweetness: item.sweetness,
           ice: item.ice,
-          flavor: item.flavor || "none",
-          quantity: item.quantity,
         })),
       },
     };
